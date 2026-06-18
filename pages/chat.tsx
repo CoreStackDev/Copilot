@@ -68,7 +68,7 @@ export default function ChatPage() {
           </div>
         </header>
         <main style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-          {token && <CopilotEmbed ssoToken={token} />}
+          {token && user && <CopilotEmbed ssoToken={token} userName={user.name} userEmail={user.email} />}
         </main>
       </div>
     </>
