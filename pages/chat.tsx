@@ -17,8 +17,6 @@ export default function ChatPage() {
   const router = useRouter();
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [error, setError] = useState('');
-  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     const t = sessionStorage.getItem('sso_token');
@@ -30,7 +28,6 @@ export default function ChatPage() {
   }, []);
 
   const handleSignOut = () => { sessionStorage.clear(); router.push('/'); };
-  const handleError = (msg: string) => setError(msg);
   const initials = user?.name?.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
 
   const headerStyle: CSSProperties = {
@@ -71,18 +68,7 @@ export default function ChatPage() {
           </div>
         </header>
         <main style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-          {error ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '40px', textAlign: 'center', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', maxWidth: '380px' }}>
-                <div style={{ fontSize: '48px', marginBottom: '16px' }}>&#9888;&#65039;</div>
-                <h3 style={{ color: '#1f2937', marginBottom: '8px', fontSize: '18px' }}>Could not connect to the AI Assistant.</h3>
-                <p style={{ color: '#6b7280', fontSize: '14px', marginBottom: '24px' }}>{error}</p>
-                <button onClick={() => { setError(''); setRetryKey(k => k + 1); }} style={{ background: 'linear-gradient(135deg,#667eea,#764ba2)', color: '#fff', border: 'none', padding: '11px 28px', borderRadius: '8px', fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}>Retry</button>
-              </div>
-            </div>
-          ) : token ? (
-            <CopilotEmbed key={retryKey} ssoToken={token} onError={handleError} />
-          ) : null}
+          {token && <CopilotEmbed ssoToken={token} />}
         </main>
       </div>
     </>
