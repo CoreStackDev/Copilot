@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, CSSProperties } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
@@ -8,7 +8,7 @@ const CopilotEmbed = dynamic(() => import('../components/CopilotEmbed'), {
   loading: () => (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', flexDirection: 'column', gap: '16px' }}>
       <div className='spin-loader' style={{ width: '40px', height: '40px', border: '3px solid #e5e7eb', borderTopColor: '#667eea', borderRadius: '50%' }} />
-      <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Loading AI Assistant…</p>
+      <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Loading AI Assistant...</p>
     </div>
   ),
 });
@@ -33,14 +33,14 @@ export default function ChatPage() {
   const handleError = (msg: string) => setError(msg);
   const initials = user?.name?.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
 
-  const headerStyle: React.CSSProperties = {
+  const headerStyle: CSSProperties = {
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     padding: '0 24px', height: '64px', display: 'flex', alignItems: 'center',
     justifyContent: 'space-between', flexShrink: 0,
     boxShadow: '0 2px 12px rgba(102,126,234,0.4)',
   };
 
-  const btnStyle: React.CSSProperties = {
+  const btnStyle: CSSProperties = {
     background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)',
     color: '#fff', padding: '7px 16px', borderRadius: '8px', fontSize: '13px',
     fontWeight: 600, cursor: 'pointer',
@@ -49,7 +49,7 @@ export default function ChatPage() {
   return (
     <>
       <Head><title>AI Assistant</title></Head>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f3f4f6', fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#f3f4f6' }}>
         <header style={headerStyle}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ width: '36px', height: '36px', background: 'rgba(255,255,255,0.2)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
